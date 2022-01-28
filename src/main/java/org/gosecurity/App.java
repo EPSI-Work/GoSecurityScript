@@ -25,21 +25,27 @@ public class App
 
     public static List<Tool> getListTools(){
         List<Tool> listTools = new ArrayList<>();
+        //This var is used to display in error the name of the not founded file.
+        String currentLoadedFileName = "";
         try {
-            System.out.println(App.basePath + "liste.txt");
-            File myObj = new File(App.basePath + "liste.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
+            currentLoadedFileName = "liste.txt";
+            File listeFile = new File(App.basePath + "liste.txt");
+            if(listeFile.exists()){
+                Scanner myReader = new Scanner(listeFile);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
 
-                String[] listElement = data.split("\\t");
+                    String[] listElement = data.split("\\t");
 
-                Tool tool = new Tool(listElement[0], listElement[1]);
-                listTools.add(tool);
+                    Tool tool = new Tool(listElement[0], listElement[1]);
+                    listTools.add(tool);
+                }
+                myReader.close();
+            }else{
+                throw new FileNotFoundException();
             }
-            myReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.println("Le fichier " + currentLoadedFileName + "n'existe pas.");
             e.printStackTrace();
         }
         return listTools;
@@ -47,16 +53,24 @@ public class App
 
     private static List<String> getListAgentId(){
         List<String> listAgentId = new ArrayList<>();
+        //This var is used to display in error the name of the not founded file.
+        String currentLoadedFileName = "";
         try {
-            File myObj = new File(App.basePath + "staff.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                listAgentId.add(data);
+            currentLoadedFileName = "staff.txt";
+            File staffFile = new File(App.basePath + "staff.txt");
+            if(staffFile.exists()){
+                Scanner myReader = new Scanner(staffFile);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    listAgentId.add(data);
+                }
+                myReader.close();
+            }else{
+                throw new FileNotFoundException();
             }
-            myReader.close();
+
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.println("Le fichier " + currentLoadedFileName + "n'existe pas.");
             e.printStackTrace();
         }
         return listAgentId;
@@ -64,39 +78,52 @@ public class App
 
     public static List<Agent> getListAgent(List<Tool> listTools){
         List<Agent> listAgent = new ArrayList<Agent>();
+        //This var is used to display in error the name of the not founded file.
+        String currentLoadedFileName = "";
         try {
             for(String agentId : getListAgentId()){
-                File myObj = new File(App.basePath + agentId + ".txt");
-                Scanner myReader = new Scanner(myObj);
-                List<String> dataElements = new ArrayList<String>();
-                while (myReader.hasNextLine()) {
-                    //On récupere chaque ligne du fichier
-                     dataElements.add(myReader.nextLine());
-                }
-                myReader.close();
+                currentLoadedFileName = agentId + ".txt";
+                File agentFile = new File(App.basePath + agentId + ".txt");
+                if(agentFile.exists()){
+                    Scanner myReader = new Scanner(agentFile);
+                    List<String> dataElements = new ArrayList<String>();
+                    while (myReader.hasNextLine()) {
+                        //On récupere chaque ligne du fichier
+                        dataElements.add(myReader.nextLine());
+                    }
+                    myReader.close();
 
-                if(dataElements.size() > 5){
-                    //Création de la liste de tools de l'agent courrant.
-                    List<Tool> agentTools = new ArrayList<Tool>();
-                   int nbTools = dataElements.size() - 5;
-                   for (int i = 4; nbTools >= 0; i++){
-                       nbTools--;
-                       Tool findedTool = getToolById(listTools, dataElements.get(i));
-                       if(findedTool != null){
-                           agentTools.add(findedTool);
-                       }else{
-                           throw new Exception("Le nom du materiel : " + dataElements.get(i) + " est inconnu.");
-                       }
-                   }
+                    if(dataElements.size() > 5){
+                        //Création de la liste de tools de l'agent courrant.
+                        List<Tool> agentTools = new ArrayList<Tool>();
+                        int nbTools = dataElements.size() - 5;
+                        for (int i = 4; nbTools >= 0; i++){
+                            nbTools--;
+                            Tool findedTool = getToolById(listTools, dataElements.get(i));
+                            if(findedTool != null){
+                                agentTools.add(findedTool);
+                            }else{
+                                throw new Exception("Le nom du materiel : " + dataElements.get(i) + " est inconnu.");
+                            }
+                        }
 
-                   //Creation de l'agent
-                    listAgent.add(new Agent(dataElements.get(0), dataElements.get(1), dataElements.get(2), dataElements.get(3), agentTools));
+                        currentLoadedFileName = agentId + ".jpg";
+                        File identifyAgent = new File(App.basePath + agentId + ".jpg");
+                        if(identifyAgent.exists()){
+                            //Creation de l'agent
+                            listAgent.add(new Agent(dataElements.get(0), dataElements.get(1), dataElements.get(2), dataElements.get(3), agentTools));
+                        }else{
+                            throw new FileNotFoundException();
+                        }
+                    }else{
+                        throw new Exception("Certains champs sont manquant dans le fichier : " + agentId + ".txt");
+                    }
                 }else{
-                    throw new Exception("Certains champs sont manquant dans le fichier : " + agentId + ".txt");
+                    throw new FileNotFoundException();
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.println("Le fichier " + currentLoadedFileName + "n'existe pas.");
             e.printStackTrace();
         } catch (Exception e) {
             System.out.println(e.getMessage());
