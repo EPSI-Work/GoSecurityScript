@@ -7,14 +7,16 @@ public class Agent {
     private String firstname;
     private String mission;
     private String password;
+    private String pathToIdentity;
     private List<Tool> tools;
 
-    public Agent(String lastname, String firstname, String mission, String password, List<Tool> tools){
+    public Agent(String lastname, String firstname, String mission, String password, List<Tool> tools, String pathToIdentity){
         this.lastname = lastname;
         this.firstname = firstname;
         this.mission = mission;
         this.password = password;
         this.tools = tools;
+        this.pathToIdentity = pathToIdentity;
     }
 
     public String getLastname() {
@@ -55,5 +57,13 @@ public class Agent {
 
     public void setTools(List<Tool> tools) {
         this.tools = tools;
+    }
+
+    public String getPathToIdentity() {
+        return pathToIdentity;
+    }
+
+    public void setPathToIdentity(String pathToIdentity) {
+        this.pathToIdentity = pathToIdentity;
     }
 }

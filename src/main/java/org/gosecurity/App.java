@@ -20,7 +20,7 @@ public class App
         App.basePath = "C:\\Users\\TechnoCraft\\Documents\\Dev\\EPSI\\JAVA\\GoSecurity\\";
         List<Tool> listTool = getListTools();
         List<Agent> listAgent = getListAgent(listTool);
-        System.out.println(listAgent.get(0).getTools().get(2).getLabel());
+        System.out.println(listAgent.get(0).getPathToIdentity());
     }
 
     public static List<Tool> getListTools(){
@@ -45,7 +45,7 @@ public class App
                 throw new FileNotFoundException();
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Le fichier " + currentLoadedFileName + "n'existe pas.");
+            System.out.println("Le fichier " + currentLoadedFileName + " n'existe pas.");
             e.printStackTrace();
         }
         return listTools;
@@ -70,7 +70,7 @@ public class App
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println("Le fichier " + currentLoadedFileName + "n'existe pas.");
+            System.out.println("Le fichier " + currentLoadedFileName + " n'existe pas.");
             e.printStackTrace();
         }
         return listAgentId;
@@ -108,10 +108,10 @@ public class App
                         }
 
                         currentLoadedFileName = agentId + ".jpg";
-                        File identifyAgent = new File(App.basePath + agentId + ".jpg");
-                        if(identifyAgent.exists()){
+                        File identifyAgentFile = new File(App.basePath + agentId + ".jpg");
+                        if(identifyAgentFile.exists()){
                             //Creation de l'agent
-                            listAgent.add(new Agent(dataElements.get(0), dataElements.get(1), dataElements.get(2), dataElements.get(3), agentTools));
+                            listAgent.add(new Agent(dataElements.get(0), dataElements.get(1), dataElements.get(2), dataElements.get(3), agentTools, identifyAgentFile.getPath()));
                         }else{
                             throw new FileNotFoundException();
                         }
@@ -123,7 +123,7 @@ public class App
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Le fichier " + currentLoadedFileName + "n'existe pas.");
+            System.out.println("Le fichier " + currentLoadedFileName + " n'existe pas.");
             e.printStackTrace();
         } catch (Exception e) {
             System.out.println(e.getMessage());
