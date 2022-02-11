@@ -1,13 +1,9 @@
 package org.gosecurity.generator;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.CharStreams;
 import org.gosecurity.src.model.Agent;
 import org.gosecurity.src.model.Tool;
-import sun.security.util.IOUtils;
 
 import java.io.*;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
