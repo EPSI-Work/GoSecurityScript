@@ -1,21 +1,20 @@
 package org.gosecurity.generator;
 
-import org.gosecurity.App;
+import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
 import org.gosecurity.src.model.Agent;
 import org.gosecurity.src.model.Tool;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.regex.Matcher;
 
 public class IndexGenerator {
     private List<Agent> listAgents;
@@ -32,6 +31,21 @@ public class IndexGenerator {
         return content.replaceAll("\\$\\{" + varName +"?\\}", value);
     }
 
+    private InputStream getFileFromResourceAsStream(String fileName) {
+
+        // The class loader that loaded the class
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(fileName);
+
+        // the stream holding the file content
+        if (inputStream == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        } else {
+            return inputStream;
+        }
+
+    }
+
     public File generateIndex(){
         File indexFile = null;
         try {
@@ -43,15 +57,14 @@ public class IndexGenerator {
                 // use directory.mkdirs(); here instead.
             }
             indexFile = new File(this.websitePath + "/index.html");
-            System.out.println(this.websitePath + "/index.html");
+
             URL resource = getClass().getClassLoader().getResource("/template/indexMainGenerator.html");
             if (resource == null) {
                 throw new IllegalArgumentException("file not found!");
             }
-            Path path = new File(resource.toURI()).toPath();
-            Charset charset = StandardCharsets.UTF_8;
+            InputStream is = this.getFileFromResourceAsStream("/template/indexMainGenerator.html");
 
-            String content = new String(Files.readAllBytes(path), charset);
+            String content = CharStreams.toString(new InputStreamReader(is, Charsets.UTF_8));
             content = this.setValue(content, "agentNumber", String.valueOf(listAgents.size()));
             content = this.setValue(content, "materielAvailablePercent", "50");
 
@@ -59,12 +72,9 @@ public class IndexGenerator {
             content = this.setValue(content, "materielTable", this.createMaterielRowDataTable(listTools));
 
             indexFile.createNewFile();
-            Files.write(indexFile.toPath(), content.getBytes(charset));
+            Files.write(indexFile.toPath(), content.getBytes(Charsets.UTF_8));
             System.out.println("File created");
         } catch (java.io.IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        } catch (java.net.URISyntaxException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
