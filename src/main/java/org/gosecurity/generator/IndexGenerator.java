@@ -23,7 +23,7 @@ public class IndexGenerator {
     }
 
     private String setValue(String content, String varName, String value){
-        return content.replaceAll("\\$\\{" + varName +"?\\}", value);
+        return content.replaceAll("\\$\\{" + varName +"?}", value);
     }
 
     private InputStream getFileFromResourceAsStream(String fileName) {
@@ -97,7 +97,7 @@ public class IndexGenerator {
     public String createMaterielRowDataTable(List<Tool> listTools){
         String dataTableRowHTML = "";
         try {
-            InputStream is = this.getFileFromResourceAsStream("template/indexAgentTableGenerator.html");
+            InputStream is = this.getFileFromResourceAsStream("template/indexMaterielTableGenerator.html");
             StringBuilder sb = new StringBuilder();
             for (int ch; (ch = is.read()) != -1; ) {
                 sb.append((char) ch);
