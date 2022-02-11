@@ -6,6 +6,7 @@ import org.gosecurity.src.model.Tool;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -36,7 +37,11 @@ public class IndexGenerator {
         try {
             indexFile = new File(this.websitePath + "/index.html");
             System.out.println(this.websitePath + "/index.html");
-            Path path = Paths.get(System.getProperty("user.dir") + "/template/indexMainGenerator.html");
+            URL resource = getClass().getClassLoader().getResource("/template/indexMainGenerator.html");
+            if (resource == null) {
+                throw new IllegalArgumentException("file not found!");
+            }
+            Path path = new File(resource.toURI()).toPath();
             Charset charset = StandardCharsets.UTF_8;
 
             String content = new String(Files.readAllBytes(path), charset);
@@ -50,6 +55,9 @@ public class IndexGenerator {
             Files.write(indexFile.toPath(), content.getBytes(charset));
             System.out.println("File created");
         } catch (java.io.IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (java.net.URISyntaxException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
