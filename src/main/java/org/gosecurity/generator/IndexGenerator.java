@@ -35,6 +35,7 @@ public class IndexGenerator {
         File indexFile = null;
         try {
             indexFile = new File(this.websitePath + "/index.html");
+            System.out.println(this.websitePath + "/index.html");
             Path path = Paths.get(System.getProperty("user.dir") + "/template/indexMainGenerator.html");
             Charset charset = StandardCharsets.UTF_8;
 
@@ -47,6 +48,7 @@ public class IndexGenerator {
 
             indexFile.createNewFile();
             Files.write(indexFile.toPath(), content.getBytes(charset));
+            System.out.println("File created");
         } catch (java.io.IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
