@@ -4,10 +4,9 @@ import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
 import org.gosecurity.src.model.Agent;
 import org.gosecurity.src.model.Tool;
+import sun.security.util.IOUtils;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -52,8 +51,12 @@ public class IndexGenerator {
             indexFile = new File(this.websitePath + "/index.html");
 
             InputStream is = this.getFileFromResourceAsStream("template/indexMainGenerator.html");
+            StringBuilder sb = new StringBuilder();
+            for (int ch; (ch = is.read()) != -1; ) {
+                sb.append((char) ch);
+            }
 
-            String content = CharStreams.toString(new InputStreamReader(is));
+            String content = sb.toString();
             content = this.setValue(content, "agentNumber", String.valueOf(listAgents.size()));
             content = this.setValue(content, "materielAvailablePercent", "50");
 
@@ -63,7 +66,7 @@ public class IndexGenerator {
             indexFile.createNewFile();
             Files.write(indexFile.toPath(), content.getBytes());
             System.out.println("File created");
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
