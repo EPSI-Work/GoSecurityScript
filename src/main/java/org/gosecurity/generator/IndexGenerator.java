@@ -60,7 +60,7 @@ public class IndexGenerator {
             content = this.setValue(content, "materielTable", this.createMaterielRowDataTable(listTools));
 
             indexFile.createNewFile();
-            Files.write(indexFile.toPath(), content.getBytes());
+            Files.write(indexFile.toPath(), content.getBytes(StandardCharsets.UTF_8));
             System.out.println("File created");
         } catch (IOException e) {
             System.out.println("An error occurred.");
