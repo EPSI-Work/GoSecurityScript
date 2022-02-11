@@ -25,6 +25,7 @@ public class App
         List<Tool> listTool = getListTools();
         List<Agent> listAgent = getListAgent(listTool);
         IndexGenerator indexGenerator = new IndexGenerator(listAgent, listTool, App.websitePath);
+        indexGenerator.generateIndex();
     }
 
     public static List<Tool> getListTools(){
