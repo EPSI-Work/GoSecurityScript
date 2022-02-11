@@ -55,7 +55,7 @@ public class IndexGenerator {
             if (resource == null) {
                 throw new IllegalArgumentException("file not found!");
             }
-            InputStream is = this.getFileFromResourceAsStream("/template/indexMainGenerator.html");
+            InputStream is = this.getFileFromResourceAsStream("template/indexMainGenerator.html");
 
             String content = CharStreams.toString(new InputStreamReader(is, Charsets.UTF_8));
             content = this.setValue(content, "agentNumber", String.valueOf(listAgents.size()));
