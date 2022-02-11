@@ -31,6 +31,12 @@
       <artifactId>guava</artifactId>
       <version>31.0.1-jre</version>
     </dependency>
+    <dependency>
+      <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+      <artifactId>sonar-packaging-maven-plugin</artifactId>
+      <version>1.17</version>
+      <type>maven-plugin</type>
+    </dependency>
   </dependencies>
 
   <build>
