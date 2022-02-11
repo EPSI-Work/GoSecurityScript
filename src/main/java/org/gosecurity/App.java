@@ -29,6 +29,7 @@ public class App
         indexGenerator.generateIndex();
         for (Agent agent:
              listAgent) {
+            System.out.println("Agent");
             AgentGenerator agentGenerator = new AgentGenerator(agent, App.websitePath);
             agentGenerator.generateAgent();
         }
