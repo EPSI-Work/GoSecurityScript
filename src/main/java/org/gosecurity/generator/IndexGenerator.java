@@ -50,11 +50,7 @@ public class IndexGenerator {
         File indexFile = null;
         try {
             indexFile = new File(this.websitePath + "/index.html");
-
-            URL resource = getClass().getClassLoader().getResource("/template/indexMainGenerator.html");
-            if (resource == null) {
-                throw new IllegalArgumentException("file not found!");
-            }
+            
             InputStream is = this.getFileFromResourceAsStream("template/indexMainGenerator.html");
 
             String content = CharStreams.toString(new InputStreamReader(is, Charsets.UTF_8));
