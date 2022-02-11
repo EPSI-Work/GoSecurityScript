@@ -53,7 +53,7 @@ public class IndexGenerator {
 
             InputStream is = this.getFileFromResourceAsStream("template/indexMainGenerator.html");
 
-            String content = CharStreams.toString(new InputStreamReader(is, Charsets.UTF_8));
+            String content = CharStreams.toString(new InputStreamReader(is));
             content = this.setValue(content, "agentNumber", String.valueOf(listAgents.size()));
             content = this.setValue(content, "materielAvailablePercent", "50");
 
@@ -61,7 +61,7 @@ public class IndexGenerator {
             content = this.setValue(content, "materielTable", this.createMaterielRowDataTable(listTools));
 
             indexFile.createNewFile();
-            Files.write(indexFile.toPath(), content.getBytes(Charsets.UTF_8));
+            Files.write(indexFile.toPath(), content.getBytes());
             System.out.println("File created");
         } catch (java.io.IOException e) {
             System.out.println("An error occurred.");
