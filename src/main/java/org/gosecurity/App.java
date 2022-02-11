@@ -1,5 +1,6 @@
 package org.gosecurity;
 
+import org.gosecurity.generator.IndexGenerator;
 import org.gosecurity.src.model.Agent;
 import org.gosecurity.src.model.Tool;
 
@@ -14,13 +15,16 @@ import java.util.*;
 public class App 
 {
     private static String basePath;
+    private static String websitePath;
 
     public static void main( String[] args )
     {
-        App.basePath = "C:\\Users\\TechnoCraft\\Documents\\Dev\\EPSI\\JAVA\\GoSecurity\\";
+        //App.basePath = "C:\\Users\\TechnoCraft\\Documents\\Dev\\EPSI\\JAVA\\GoSecurity\\";
+        App.basePath = "/home/debian/dev/GoSecurity/";
+        App.websitePath = args[0];
         List<Tool> listTool = getListTools();
         List<Agent> listAgent = getListAgent(listTool);
-        System.out.println(listAgent.get(0).getPathToIdentity());
+        IndexGenerator indexGenerator = new IndexGenerator(listAgent, listTool, App.websitePath);
     }
 
     public static List<Tool> getListTools(){
