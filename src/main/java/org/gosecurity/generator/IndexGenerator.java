@@ -72,12 +72,14 @@ public class IndexGenerator {
     public String createAgentRowDataTable(List<Agent> listAgents){
         String dataTableRowHTML = "";
         try {
-            Path path = Paths.get(System.getProperty("user.dir") + "/template/indexAgentTableGenerator.html");
-            Charset charset = StandardCharsets.UTF_8;
-
+            InputStream is = this.getFileFromResourceAsStream("/template/indexAgentTableGenerator.html");
+            StringBuilder sb = new StringBuilder();
+            for (int ch; (ch = is.read()) != -1; ) {
+                sb.append((char) ch);
+            }
             for (Agent agent:
                     listAgents) {
-                String content = new String(Files.readAllBytes(path), charset);
+                String content = sb.toString();
                 content = this.setValue(content, "agentLastname", agent.getLastname());
                 content = this.setValue(content, "agentFirstname", agent.getFirstname());
                 content = this.setValue(content, "agentPageId", agent.getId());
@@ -95,12 +97,15 @@ public class IndexGenerator {
     public String createMaterielRowDataTable(List<Tool> listTools){
         String dataTableRowHTML = "";
         try {
-            Path path = Paths.get(System.getProperty("user.dir") + "/template/indexAgentTableGenerator.html");
-            Charset charset = StandardCharsets.UTF_8;
+            InputStream is = this.getFileFromResourceAsStream("/template/indexAgentTableGenerator.html");
+            StringBuilder sb = new StringBuilder();
+            for (int ch; (ch = is.read()) != -1; ) {
+                sb.append((char) ch);
+            }
 
             for (Tool tool:
                     listTools) {
-                String content = new String(Files.readAllBytes(path), charset);
+                String content = sb.toString();
                 content = this.setValue(content, "materielName", tool.getLabel());
 
                 dataTableRowHTML = dataTableRowHTML + content;
