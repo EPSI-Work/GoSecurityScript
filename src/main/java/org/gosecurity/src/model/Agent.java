@@ -19,6 +19,10 @@ public class Agent {
         this.pathToIdentity = pathToIdentity;
     }
 
+    public String getId(){
+        return this.getFirstname().charAt(0) + this.getLastname();
+    }
+
     public String getLastname() {
         return lastname;
     }
