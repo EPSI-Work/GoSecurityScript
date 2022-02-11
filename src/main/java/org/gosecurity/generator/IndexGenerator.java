@@ -34,13 +34,6 @@ public class IndexGenerator {
     public File generateIndex(){
         File indexFile = null;
         try {
-
-            File directory = new File("generatedFile");
-            if (!directory.exists()){
-                directory.mkdir();
-                // If you require it to make the entire directory path including parents,
-                // use directory.mkdirs(); here instead.
-            }
             indexFile = new File(this.websitePath + "/index.html");
             Path path = Paths.get(System.getProperty("user.dir") + "/template/indexMainGenerator.html");
             Charset charset = StandardCharsets.UTF_8;
