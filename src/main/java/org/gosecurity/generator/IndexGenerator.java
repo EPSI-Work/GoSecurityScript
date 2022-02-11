@@ -50,7 +50,7 @@ public class IndexGenerator {
         File indexFile = null;
         try {
             indexFile = new File(this.websitePath + "/index.html");
-            
+
             InputStream is = this.getFileFromResourceAsStream("template/indexMainGenerator.html");
 
             String content = CharStreams.toString(new InputStreamReader(is, Charsets.UTF_8));
