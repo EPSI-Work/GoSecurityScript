@@ -72,7 +72,7 @@ public class IndexGenerator {
     public String createAgentRowDataTable(List<Agent> listAgents){
         String dataTableRowHTML = "";
         try {
-            InputStream is = this.getFileFromResourceAsStream("/template/indexAgentTableGenerator.html");
+            InputStream is = this.getFileFromResourceAsStream("template/indexAgentTableGenerator.html");
             StringBuilder sb = new StringBuilder();
             for (int ch; (ch = is.read()) != -1; ) {
                 sb.append((char) ch);
@@ -97,7 +97,7 @@ public class IndexGenerator {
     public String createMaterielRowDataTable(List<Tool> listTools){
         String dataTableRowHTML = "";
         try {
-            InputStream is = this.getFileFromResourceAsStream("/template/indexAgentTableGenerator.html");
+            InputStream is = this.getFileFromResourceAsStream("template/indexAgentTableGenerator.html");
             StringBuilder sb = new StringBuilder();
             for (int ch; (ch = is.read()) != -1; ) {
                 sb.append((char) ch);
