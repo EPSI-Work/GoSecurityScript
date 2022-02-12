@@ -20,7 +20,7 @@ public class Agent {
     }
 
     public String getId(){
-        return this.getFirstname().charAt(0) + this.getLastname();
+        return (this.getFirstname().charAt(0) + this.getLastname()).toLowerCase();
     }
 
     public String getLastname() {
