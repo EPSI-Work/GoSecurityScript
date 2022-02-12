@@ -30,7 +30,7 @@ public class App
         for (Agent agent:
              listAgent) {
             System.out.println("Agent");
-            AgentGenerator agentGenerator = new AgentGenerator(agent, App.websitePath);
+            AgentGenerator agentGenerator = new AgentGenerator(agent, App.websitePath, App.basePath);
             agentGenerator.generateAgent();
         }
     }

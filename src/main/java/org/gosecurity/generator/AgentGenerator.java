@@ -8,15 +8,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class AgentGenerator {
     private Agent agent;
     private String websitePath;
+    private String basePath;
 
-    public AgentGenerator(Agent agent, String websitePath){
+    public AgentGenerator(Agent agent, String websitePath, String basePath){
         this.agent = agent;
         this.websitePath = websitePath;
+        this.basePath = basePath;
     }
 
     private String setValue(String content, String varName, String value){
@@ -57,6 +62,9 @@ public class AgentGenerator {
             content = this.setValue(content, "materielTable", this.createMaterielRowDataTable(agent.getTools()));
 
             indexFile.createNewFile();
+            Path sourceJPGFile = Paths.get(basePath + this.agent.getId() + ".jpg");
+            Path copiedJPGFile = Paths.get(this.websitePath);
+            Files.copy(sourceJPGFile, copiedJPGFile, StandardCopyOption.REPLACE_EXISTING);
             Files.write(indexFile.toPath(), content.getBytes(StandardCharsets.UTF_8));
             System.out.println("File created");
         } catch (IOException e) {
