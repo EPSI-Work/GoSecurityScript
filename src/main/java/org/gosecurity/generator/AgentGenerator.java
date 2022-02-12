@@ -51,7 +51,7 @@ public class AgentGenerator {
 
             String content = sb.toString();
             content = this.setValue(content, "agentLastname", agent.getLastname());
-            content = this.setValue(content, "agentFirstName", agent.getFirstname());
+            content = this.setValue(content, "agentFirstname", agent.getFirstname());
 
             content = this.setValue(content, "agentMission", agent.getMission());
             content = this.setValue(content, "materielTable", this.createMaterielRowDataTable(agent.getTools()));
