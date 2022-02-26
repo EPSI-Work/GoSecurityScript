@@ -66,7 +66,7 @@ public class AgentGenerator {
             Path copiedJPGFile = Paths.get(this.websitePath + "/img/" + this.agent.getId() + ".jpg");
             Files.copy(sourceJPGFile, copiedJPGFile, StandardCopyOption.REPLACE_EXISTING);
             Files.write(indexFile.toPath(), content.getBytes(StandardCharsets.UTF_8));
-            System.out.println("File createde");
+            System.out.println("File create");
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
