@@ -2,6 +2,7 @@ package org.gosecurity;
 
 import org.gosecurity.generator.AgentGenerator;
 import org.gosecurity.generator.IndexGenerator;
+import org.gosecurity.generator.PasswordGenerator;
 import org.gosecurity.src.model.Agent;
 import org.gosecurity.src.model.Tool;
 
@@ -27,6 +28,8 @@ public class App
         List<Agent> listAgent = getListAgent(listTool);
         IndexGenerator indexGenerator = new IndexGenerator(listAgent, listTool, App.websitePath);
         indexGenerator.generateIndex();
+        PasswordGenerator passwordGenerator = new PasswordGenerator(listAgent, App.websitePath);
+        passwordGenerator.generateAgentPassword();
         for (Agent agent:
              listAgent) {
             System.out.println("Agent");
