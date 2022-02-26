@@ -33,7 +33,7 @@ public class PasswordGenerator {
             Path copiedJPGFile = Paths.get(this.websitePath + "/.htaccess");
             Files.copy(sourceJPGFile, copiedJPGFile, StandardCopyOption.REPLACE_EXISTING);
 
-            indexFile = new File(this.websitePath + "/.htpassword");
+            indexFile = new File(this.websitePath + "/.htpasswd");
 
             String content = this.createAgentPasswordLine(this.listAgents);
 
