@@ -1,5 +1,6 @@
 package org.gosecurity.generator;
 
+import com.google.common.hash.Hashing;
 import org.gosecurity.src.model.Agent;
 import org.gosecurity.src.model.Tool;
 
@@ -17,10 +18,6 @@ public class PasswordGenerator {
     public PasswordGenerator(List<Agent> listAgents, String websitePath){
         this.listAgents = listAgents;
         this.websitePath = websitePath;
-    }
-
-    private String setValue(String content, String varName, String value){
-        return content.replaceAll("\\$\\{" + varName +"?}", value);
     }
 
     public File generateAgentPassword(){
@@ -44,7 +41,10 @@ public class PasswordGenerator {
         String content = "";
             for (Agent agent:
                     listAgents) {
-                content += agent.getId() + ":" + agent.getPassword() + "\n";
+                String password = Hashing.sha256()
+                        .hashString(agent.getPassword(), StandardCharsets.UTF_8)
+                        .toString();
+                content += agent.getId() + ":" + password + "\n";
             }
         return content;
     }
