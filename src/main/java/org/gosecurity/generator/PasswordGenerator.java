@@ -41,10 +41,7 @@ public class PasswordGenerator {
         String content = "";
             for (Agent agent:
                     listAgents) {
-                String password = Hashing.sha256()
-                        .hashString(agent.getPassword(), StandardCharsets.UTF_8)
-                        .toString();
-                content += agent.getId() + ":" + password + "\n";
+                content += agent.getId() + ":" + agent.getPassword() + "\n";
             }
         return content;
     }
